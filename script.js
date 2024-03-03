@@ -73,7 +73,7 @@ function highlight(e) {
   listElem.addEventListener('mouseleave', function() {
     listElem.style.backgroundColor = ''
   })
-  e.target.style.backgroundColor = 'pink';
+  e.target.style.backgroundColor = 'rgba(73,107,112,1)';
 
 }
 
