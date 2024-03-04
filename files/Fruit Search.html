@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa -->
+<html class="notion-html" lang="en" style="--full-viewport-height: 842px;"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          
+    <script id="ci-head-js">
+      (function() {
+        'use strict';
+        localStorage.setItem("__console","true")
+        let forceDarkMode = 'undefined'
+        if (forceDarkMode === 'true' || (forceDarkMode === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          console.log('🐽 strict init dark mode', 'forceDarkMode', forceDarkMode, 'prefers-color-scheme', window.matchMedia('(prefers-color-scheme: dark)'))
+          localStorage.setItem('theme', '{"mode":"dark"}')
+        } else if (forceDarkMode === 'false' || (forceDarkMode === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+          console.log('🐽 strict init light mode', 'forceDarkMode', forceDarkMode, 'prefers-color-scheme', window.matchMedia('(prefers-color-scheme: light)'))
+          localStorage.setItem('theme', '{"mode":"light"}')
+        } else {
+          console.log('🐽 strict init default light mode')
+          localStorage.setItem('theme', '{"mode":"light"}')
+        }
+      })();
+    </script>
+    <script id="ci-sotion-fetch">
+      const originalFetch = window.fetch;
+      window.requestInterceptor = (args) => {
+        console.log("window.requestInterceptor.args: ", args)
+        if(args) {
+          let requestUrl = args[0];
+          if(requestUrl.includes("file.notion.so")) {
+            requestUrl = requestUrl.replace("file.notion.so", "lessons.springboard.com");
+            args[0] = requestUrl;
+          }
+          // if(requestUrl.includes("/api/v3/getClientExperimentsV2") || requestUrl.includes("/api/v3/getAssetsJsonV2") || requestUrl.includes("/api/v3/getExternalIntegrations") || requestUrl.includes("/api/v3/getUserAnalyticsSettings") || requestUrl.includes("/api/v3/ping")) {
+          //   if(requestUrl.includes("lessons.springboard.com")) {
+          //     requestUrl = requestUrl.replace("lessons.springboard.com", "insidious-help-d7f.notion.site");
+          //   } else {
+          //     requestUrl = "https://insidious-help-d7f.notion.site".concat(requestUrl);
+          //   }
+          //   if(args[1]?.credentials) {
+          //     args[1].credentials = "omit";
+          //   }
+          //   console.log("Route request: ", requestUrl);
+          //   args[0] = requestUrl;
+          // }
+        }
+        return args;
+      }
+      window.responseInterceptor = (response) => {
+        return response;
+      }
+      window.fetch = async (...args) => {
+        // request interceptor
+        args = requestInterceptor(args);
+        let response = await originalFetch(...args);
+        // response interceptor
+        // response = responseInterceptor(response);  
+        return response;
+      };
+    </script>
+    <style id="ci-head-css">
+      .ci-display-none { display: none !important; }
+      .notion-topbar-action-buttons { display: none !important; }
+      .toggle-off { display: none !important; }
+      .toggle-button {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          height: 24px;
+          width: 36px;
+          z-index: 100;
+      }
+
+      .dragHandle { 
+        display: none !important; 
+        cursor: default !important; 
+        background: black !important;
+      }
+      div:has(> svg.dragHandle) { display: none !important; cursor: default !important;}
+      
+      /* template duplicate button styles */
+      .dup-container {
+        position: absolute;
+        top: 12px;
+        right: 80px;
+        height: 24px;
+        z-index: 100;
+      }
+      .dup-button {
+        position: relative;
+        outline: none;
+        text-decoration: none;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        text-transform: uppercase;
+        height: 21px;
+        /*width: 210px*/
+        opacity: 1;
+        background-color: #191919;
+        border: 0.1em solid rgba(255, 255, 255, 0.81);
+      }
+      .dup-button-dark {
+        background-color: rgba(255, 255, 255, 0.81) !important;
+        border: 0.1em solid #6D6C68 !important;
+      }
+      .dup-button span {
+        color: rgba(255, 255, 255, 0.81);
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.7px;
+      }
+      .dup-button-dark span {
+        color: #6D6C68 !important;
+      }
+      .dup-button:hover span {
+        animation: storm 0.7s ease-in-out both;
+        animation-delay: 0.06s;
+      }
+      .reset-a, .reset-a:hover, .reset-a:visited, .reset-a:focus, .reset-a:active  {
+        text-decoration: none;
+        color: inherit;
+        outline: 0;
+        /*cursor: auto;*/
+        cursor: pointer;
+      }
+      @keyframes storm {
+        0% { transform: translate3d(0, 0, 0) translateZ(0); }
+        25% { transform: translate3d(4px, 0, 0) translateZ(0); }
+        50% { transform: translate3d(-3px, 0, 0) translateZ(0); }
+        75% { transform: translate3d(2px, 0, 0) translateZ(0); }
+        100% { transform: translate3d(0, 0, 0) translateZ(0); }
+      }
+
+      #dupe-modal {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+    }
+    .dupe-content {
+        width: 80%;
+        max-width: 425px;
+        padding: 20px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .dupe-footer { display: flex; justify-content: space-between; margin-top: 20px; }
+    .dupe-title, .dupe-description { margin-bottom: 10px; }
+    .dupe-button { padding: 5px 10px; cursor: pointer; border-radius: 5px; }
+    .dupe-cancel { color: black; background: white; }
+    .dupe-continue { color: white; background: black; }
+    .dupe-open { padding: 5px 10px; }
+    
+    </style>
+    <style>
+
+.springboard-logo-container {
+   position: absolute;
+   top: 10px;
+   left: 10px;
+   z-index: 1000;
+ }
+
+.springboard-logo {
+  height: 20px;
+  width: 120px;
+}
+
+.notion-topbar .notranslate {
+  display: none !important;
+}
+
+.notion-topbar-mobile .notranslate {
+  display: none !important;
+}
+
+.notion-topbar-mobile .springboard-logo {
+  width: 144px;
+  padding: 0 16px;
+}
+
+.notion-frame {
+  flex-direction: row !important;
+}
+
+.notion-frame > .notion-table_of_contents-block {
+  color: #777478;
+  padding-bottom: 20px;
+}
+
+.notion-page-content > .notion-table_of_contents-block {
+  display: none;
+}
+
+.notion-frame > .notion-table_of_contents-block {
+  width: 15% !important;
+  overflow: auto;
+  min-width: 0;
+  margin-top: calc(96px + env(safe-area-inset-left)) !important;
+  margin-left: 10px;
+}
+
+.notion-table_of_contents-block .notranslate {
+  font-size: 16px !important;
+  white-space: normal !important;
+}
+
+@media screen and (max-width: 1280px) {
+ .notion-frame {
+   flex-direction: column !important;
+ }
+
+ .notion-page-content > .notion-table_of_contents-block {
+  display: block;
+ }
+
+ .notion-table_of_contents-block {
+   width: 100% !important;
+   overflow: none;
+   min-width: 0;
+ }
+
+ .notion-topbar-mobile {
+  justify-content: end !important;
+ }
+
+ .notion-frame > .notion-table_of_contents-block {
+   display: none !important;
+ }
+
+}
+
+@media screen and (min-width: 1280px) {
+ /* .notion-page-content {
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+ } */
+}
+
+</style>
+    <script>
+
+</script>
+  
+          <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><script>var ua=window.navigator.userAgent,isEdgeHTML=/Windows.*Edge/i.test(ua),isChrome=!isEdgeHTML&&/Chrome/i.test(ua),isSafari=!isEdgeHTML&&!isChrome&&/Safari/i.test(ua),isFirefox=/Firefox/i.test(ua),isIE=/Trident/i.test(ua);function isUnsupportedBrowser(){var e;if(isChrome){if((e=ua.match(/Chrome\/(\d+)/i))&&e[1])return parseInt(e[1],10)<=84}else if(isSafari){if((e=ua.match(/Version\/(\d+)/i))&&e[1])return parseInt(e[1],10)<=13}else if(isFirefox){if((e=ua.match(/Firefox\/(\d+)/i))&&e[1])return parseInt(e[1],10)<=78}else{if(isEdgeHTML)return!0;if(isIE)return!0}return!1}isUnsupportedBrowser()&&window.location.replace("/unsupported-browser.html")</script><script>window.__webStartTime=performance.now(),performance.mark("__webStartTime")</script><meta name="twitter:card" content="summary_large_image"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-itunes-app" content="app-id=1232780281"><meta name="format-detection" content="telephone=no"><meta name="msapplication-tap-highlight" content="no"><link href="./Fruit Search_files/print.f2ad22d6.css" rel="stylesheet" media="print"><script defer="defer" src="./Fruit Search_files/ClientFramework-58a09993e37e3b90.js.download"></script><script defer="defer" src="./Fruit Search_files/RecordModel-5bd1ce89b60c2a92.js.download"></script><script defer="defer" src="./Fruit Search_files/4014-c0198b8c831da556.js.download"></script><script defer="defer" src="./Fruit Search_files/8905-5bd6c1465176a72b.js.download"></script><script defer="defer" src="./Fruit Search_files/app-b94fb46d0ac68ea0.js.download"></script><link href="./Fruit Search_files/app-dab99563d38bbfe7.css" rel="stylesheet">
+  <title>Fruit Search</title>
+
+  <meta property="og:title" content="Springboard Course Material">
+  <meta property="og:description" content="Springboard Course Material">
+  <meta property="og:image" content="https://www.springboard.com/assets/images/new-springboard-logo-dark@2x.png">
+  <meta property="og:site_name" content="Springboard Course Material">
+  <meta property="og:url" content="https://lessons.springboard.com">
+  <meta name="description" content="Springboard Course Material">
+
+  <meta name="twitter:title" content="Springboard Course Material">
+  <meta name="twitter:description" content="Springboard Course Material">
+  <meta name="twitter:domain" content="lessons.springboard.com">
+  <meta name="twitter:image" content="https://www.springboard.com/assets/images/new-springboard-logo-dark@2x.png">
+  <meta name="twitter:site" content="@sotion_so">
+  <meta name="twitter:url" content="https://lessons.springboard.com">
+
+  <link rel="icon" type="image/png" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="48x48" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="96x96" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="192x192" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="256x256" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="384x384" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="apple-touch-icon" sizes="512x512" href="https://www.springboard.com/assets/images/new-fav-icon.ico">
+  <link rel="stylesheet" type="text/css" href="./Fruit Search_files/postRender-c2fa1fb7454c5125.css"><script async="" src="./Fruit Search_files/gpfdrxfd"></script></head><body class="notion-body dark"><div class="springboard-logo-container"><img class="springboard-logo" src="./Fruit Search_files/new-springboard-logo-dark@2x.png" alt="Springboard Logo"></div><script>var parsed,theme="light",localThemeKey="theme",themeRecord=localStorage.getItem("theme");!themeRecord||(parsed=JSON.parse(themeRecord))&&parsed.mode&&(theme=parsed.mode),"dark"===theme&&document.body.classList.add("dark")</script><style>body{background:#fff}body.dark{background:#191919}@keyframes startup-shimmer-animation{0%{transform:translateX(-100%) translateZ(0)}100%{transform:translateX(100%) translateZ(0)}}@keyframes startup-shimmer-fade-in{0%{opacity:0}100%{opacity:1}}@keyframes startup-spinner-rotate{0%{transform:rotate(0) translateZ(0)}100%{transform:rotate(360deg) translateZ(0)}}#initial-loading-spinner{position:fixed;height:100vh;width:100vw;z-index:-1;display:none;align-items:center;justify-content:center;opacity:.5}#initial-loading-spinner svg{height:24px;width:24px;animation:startup-spinner-rotate 1s linear infinite;transform-origin:center center;pointer-events:none}#skeleton{background:#fff;position:fixed;height:100vh;width:100vw;z-index:-1;display:none;overflow:hidden}#initial-loading-spinner.show,#skeleton.show{display:flex}body.dark #skeleton{background:#191919}.notion-front-page #skeleton,.notion-mobile #skeleton{display:none}#skeleton-sidebar{background-color:#fbfbfa;box-shadow:inset -1px 0 0 0 rgba(0,0,0,.025);display:flex;width:240px;flex-direction:column;padding:12px 14px;overflow:hidden}body.dark #skeleton-sidebar{background-color:#202020;box-shadow:inset -1px 0 0 0 rgba(255,255,255,.05)}#skeleton.isElectron #skeleton-sidebar{padding-top:46px}#skeleton .row{display:flex;margin-bottom:8px;align-items:center}#skeleton .row.fadein{animation:1s ease-in 0s 1 normal both running startup-shimmer-fade-in}#skeleton .chevron{width:12px;height:12px;display:block;margin-right:4px;fill:rgba(227,226,224,.5)}body.dark #skeleton .chevron{fill:#2f2f2f}.startup-shimmer{background:rgba(227,226,224,.5);overflow:hidden;position:relative}body.dark .startup-shimmer{background:#2f2f2f}.startup-shimmer::before{content:"";position:absolute;height:100%;width:100%;z-index:1;animation:1s linear infinite startup-shimmer-animation;background:linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.03) 50%,rgba(0,0,0,0) 100%)}body.dark .startup-shimmer::before{background:linear-gradient(90deg,transparent 0,rgba(86,86,86,.1) 50%,transparent 100%)}#skeleton .icon{width:20px;height:20px;border-radius:4px}#skeleton .text{height:10px;border-radius:10px}#skeleton .draggable{-webkit-app-region:drag;position:absolute;top:0;left:0;width:100%;height:36px;display:none}#skeleton.isElectron .draggable{display:block}</style><script>(t=>{function e(e){e=t.localStorage&&t.localStorage.getItem(e),e=e&&JSON.parse(e);if(e&&e.value)return e.value}var i=document.getElementById("skeleton"),d=document.getElementById("skeleton-sidebar"),n=document.getElementById("initial-loading-spinner"),o=e("LRU:KeyValueStore2:sidebar"),a=e("LRU:KeyValueStore2:current-user-id"),l="undefined"!=typeof global||t.__isElectron,r=/ReactNative|MobileNative|Android|iPad|iPhone|iPod|Windows Phone/.test(navigator.userAgent);!i||void 0===a||r||l?n&&n.classList.add("show"):(i.classList.add("show"),d&&o&&(!1===o.expanded&&d.remove(),0<o.width&&(d.style.width=String(o.width)+"px")))})(window)</script><style id="scroll-properties">
+			::-webkit-scrollbar {
+				width: 10px;
+				height: 10px;
+			}
+			::-webkit-scrollbar {
+				background: transparent;
+			}
+			::-webkit-scrollbar-track {
+				background: rgba(202, 204, 206, 0.04);
+			}
+			::-webkit-scrollbar-thumb {
+				background:#474c50;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background:rgba(202, 204, 206, 0.3);
+			}
+		</style><div id="notion-app"><div class="notion-app-inner notion-light-theme" style="color: rgb(55, 53, 47); fill: currentcolor; line-height: 1.5; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; -webkit-font-smoothing: auto; background-color: white;"><div style="height: 100%;"><div class="notion-cursor-listener" style="width: 100vw; height: 100%; position: relative; display: flex; flex: 1 1 0%; background: white; cursor: text;"><div class="" style="display: flex; flex-direction: column; width: 100%; overflow: hidden;"><header style="background: white; max-width: 100vw; z-index: 100; user-select: none;"><div class="notion-topbar" style="width: 100%; max-width: 100vw; height: 45px; opacity: 1; transition: opacity 700ms ease 0s, color 700ms ease 0s; position: relative;"><div style="display: flex; justify-content: space-between; align-items: center; overflow: hidden; height: 45px; padding-left: 12px; padding-right: 10px;"><div class="notranslate shadow-cursor-breadcrumb" style="display: flex; align-items: center; line-height: 1.2; font-size: 14px; height: 100%; flex-grow: 0; margin-right: 8px; min-width: 0px;"><div data-block-id="8ee4277b-573a-4b75-bfac-61357183ca4a" class="notion-selectable notion-page-block" style="display: none; align-items: center; min-width: 0px;"><a href="https://lessons.springboard.com/Course-materials-8ee4277b573a4b75bfac61357183ca4a?pvs=18" rel="noopener noreferrer" style="display: flex; color: rgb(55, 53, 47); text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; align-items: center; flex-shrink: 1; white-space: nowrap; height: 24px; border-radius: 4px; font-size: inherit; line-height: 1.2; min-width: 0px; padding: 2px 6px;"><div style="display: flex; align-items: center; min-width: 0px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">Course materials</div></div></a></div><span style="margin-left: 2px; margin-right: 2px; color: rgba(55, 53, 47, 0.5); display: none;">/</span><div style="display: none; align-items: center; flex-shrink: 0;"><div role="button" tabindex="0" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; display: inline-flex; align-items: center; flex-shrink: 0; white-space: nowrap; height: 24px; border-radius: 4px; font-size: 14px; line-height: 1.2; min-width: 0px; padding-left: 6px; padding-right: 6px; color: rgb(55, 53, 47);">...</div><span style="margin-left: 2px; margin-right: 2px; color: rgba(55, 53, 47, 0.5);">/</span></div><div data-block-id="0857ecdf-f845-4154-a0fd-9cf018506b26" class="notion-selectable notion-page-block" style="display: none; align-items: center; min-width: 0px;"><a href="https://lessons.springboard.com/Exercises-0857ecdff8454154a0fd9cf018506b26?pvs=18" rel="noopener noreferrer" style="display: flex; color: rgb(55, 53, 47); text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; align-items: center; flex-shrink: 1; white-space: nowrap; height: 24px; border-radius: 4px; font-size: inherit; line-height: 1.2; min-width: 0px; padding: 2px 6px;"><div style="display: flex; align-items: center; min-width: 0px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;">Exercises</div></div></a></div><span style="margin-left: 2px; margin-right: 2px; color: rgba(55, 53, 47, 0.5); display: none;">/</span><div role="button" tabindex="0" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; display: none; align-items: center; flex-shrink: 1; white-space: nowrap; height: 24px; border-radius: 4px; font-size: 14px; line-height: 1.2; min-width: 0px; padding-left: 6px; padding-right: 6px; color: rgb(55, 53, 47);"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px;">Fruit Search</div></div></div><div style="flex-grow: 1; flex-shrink: 1;"></div><div role="button" tabindex="0" class="ci-display-none" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; display: inline-flex; align-items: center; flex-shrink: 0; white-space: nowrap; height: 28px; border-radius: 4px; font-size: 14px; line-height: 1.2; min-width: 0px; padding-left: 8px; padding-right: 8px; color: rgb(55, 53, 47); margin-right: 50px;"><svg role="graphics-symbol" viewBox="0 0 16 16" class="search" style="width: 14px; height: 14px; display: block; fill: inherit; flex-shrink: 0;"><path d="M.281 6.438c0-.875.164-1.696.492-2.461a6.484 6.484 0 011.375-2.032A6.237 6.237 0 016.64.078 6.2 6.2 0 019.11.57c.77.328 1.447.787 2.03 1.375a6.374 6.374 0 011.368 2.032c.333.765.5 1.586.5 2.46 0 .688-.107 1.342-.32 1.961a6.28 6.28 0 01-.868 1.696l3.563 3.578c.11.104.19.226.242.367.057.14.086.29.086.445 0 .22-.05.417-.149.594a1.122 1.122 0 01-1 .57c-.156 0-.307-.028-.453-.086a1.058 1.058 0 01-.382-.25l-3.586-3.585c-.5.333-1.047.596-1.641.789a6.089 6.089 0 01-1.86.28 6.237 6.237 0 01-2.468-.491 6.4 6.4 0 01-2.024-1.367A6.509 6.509 0 01.773 8.913a6.256 6.256 0 01-.492-2.476zm1.664 0c0 .65.12 1.26.36 1.828a4.775 4.775 0 001.015 1.5c.433.427.933.763 1.5 1.007a4.548 4.548 0 001.82.368c.652 0 1.261-.123 1.829-.368a4.747 4.747 0 002.508-2.507 4.567 4.567 0 00.367-1.829c0-.645-.123-1.252-.367-1.82a4.776 4.776 0 00-1.016-1.5A4.578 4.578 0 008.469 2.11a4.567 4.567 0 00-1.828-.367c-.646 0-1.253.123-1.82.367a4.667 4.667 0 00-1.5 1.008c-.433.432-.772.932-1.016 1.5a4.633 4.633 0 00-.36 1.82z"></path></svg></div></div></div><div style="width: calc(100% + 0px); user-select: none;"></div></header><main class="notion-frame" style="flex-grow: 0; flex-shrink: 1; display: flex; flex-direction: column; background: white; z-index: 1; height: calc(100vh - 45px); max-height: 100%; position: relative; width: 1504px;"><div data-block-id="1a100209-4746-4631-a0d2-bbf02afa5e19" class="notion-selectable notion-table_of_contents-block" style="width: 100%; max-width: 1302px; margin-top: 4px; margin-bottom: 4px;"><div contenteditable="false" data-content-editable-void="true" style="position: relative;"><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#baba174a22a54e8d8703296869c45501" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 0px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Autofill Draft</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#c208074640db43a382ad7545ed4b42d6" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step One </div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#dfa6dafc142747a4831389bce0f8849c" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Two</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#80bc47ac2bb6485dafa19933fdbfcc13" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Three</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#027ee37db1a349e59b3296837d0420f3" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Four</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#9f0a4fac45594956b3a4f4ca960d74ed" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Five</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#0dd0d955307e4db9ad12b3c63ca5a3f8" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Six</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#56a4dad589984cc6b681878d99887b73" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Seven </div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#52565455ffff43ca8bfbc7426aff4851" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Eight</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#23a8f272caec4c69ba9059d9ec41f8b1" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Nine</div></div></a></div><div style="color: rgb(155, 155, 155); fill: rgb(155, 155, 155);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#75a02ffaff8646ebb1947f3a74fce5f6" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.13) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Ten</div></div></a></div></div></div><div class="notion-scroller vertical" style="z-index: 1; display: flex; flex-direction: column; flex-grow: 1; position: relative; align-items: center; margin-right: 0px; margin-bottom: 0px; overflow: hidden auto;"><div style="position: absolute; top: 0px; left: 0px;"><div></div></div><div class="whenContentEditable" data-content-editable-root="true" style="caret-color: rgb(55, 53, 47); width: 100%; display: flex; flex-direction: column; position: relative; align-items: center; flex-grow: 1; --whenContentEditable--WebkitUserModify: read-write-plaintext-only;"><span data-content-editable-root-tiny-selection-trap="true" style="height: 1px; width: 1px; caret-color: transparent;"></span><div class="layout" style="padding-bottom: 30vh;"><div class="layout-full"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" style="user-select: none; --pseudoSelection--background: transparent; width: 100%; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; flex-grow: 0; z-index: 2;"><div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; height: 30vh; cursor: default;"><div style="width: 100%; cursor: inherit;"><div style="display: grid; width: 100%; height: 30vh;"><div style="grid-area: 1 / 1; width: 100%; height: 100%;"><img src="./Fruit Search_files/unnamed-2.png" referrerpolicy="same-origin" style="display: block; object-fit: cover; border-radius: 0px; width: 100%; height: 30vh; opacity: 1; object-position: center 0%;"></div></div></div><div aria-hidden="true" style="background: rgba(0, 0, 0, 0.4); border-radius: 4px; color: white; font-size: 12px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; width: 180px; left: calc(50% - 90px); padding: 0.3em 1.5em; pointer-events: none; position: absolute; top: calc(50% - 10px); text-align: center; opacity: 0;">Drag image to reposition</div></div></div></div><div class="layout-content"><div style="width: 100%; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; flex-grow: 0;"><div style="max-width: 100%; padding-left: calc(0px + env(safe-area-inset-left)); width: 100%;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" style="user-select: none; --pseudoSelection--background: transparent; pointer-events: none;"><div class="notion-page-controls" style="display: flex; justify-content: flex-start; flex-wrap: wrap; margin-top: 16px; margin-bottom: 4px; margin-left: -1px; color: rgba(55, 53, 47, 0.5); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; pointer-events: auto;"></div></div><div style="padding-right: calc(0px + env(safe-area-inset-right));"><div><div data-block-id="ef1f74b7-f30f-4422-9e9f-026c89df76fa" class="notion-selectable notion-page-block" style="color: rgb(55, 53, 47); font-weight: 700; line-height: 1.2; font-size: 40px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; cursor: text; display: flex; align-items: center;"><h1 spellcheck="true" placeholder="Untitled" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-size: 1em; font-weight: inherit; margin: 0px;">Fruit Search</h1></div><div style="margin-left: 4px;"></div></div></div></div></div></div><div class="layout-content layout-editor" style="min-height: 170px;"><div class="notion-page-content" style="flex-shrink: 0; flex-grow: 1; max-width: 100%; display: flex; align-items: flex-start; flex-direction: column; font-size: 16px; line-height: 1.5; width: 100%; z-index: 4; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;"><div data-block-id="1a100209-4746-4631-a0d2-bbf02afa5e19" class="notion-selectable notion-table_of_contents-block" style="width: 100%; max-width: 1302px; margin-top: 4px; margin-bottom: 4px;"><div contenteditable="false" data-content-editable-void="true" style="position: relative;"><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#baba174a22a54e8d8703296869c45501" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 0px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Autofill Draft</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#c208074640db43a382ad7545ed4b42d6" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step One </div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#dfa6dafc142747a4831389bce0f8849c" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Two</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#80bc47ac2bb6485dafa19933fdbfcc13" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Three</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#027ee37db1a349e59b3296837d0420f3" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Four</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#9f0a4fac45594956b3a4f4ca960d74ed" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Five</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#0dd0d955307e4db9ad12b3c63ca5a3f8" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Six</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#56a4dad589984cc6b681878d99887b73" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Seven </div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#52565455ffff43ca8bfbc7426aff4851" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Eight</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#23a8f272caec4c69ba9059d9ec41f8b1" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Nine</div></div></a></div><div style="color: rgb(120, 119, 116); fill: rgb(120, 119, 116);"><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa?pvs=25#75a02ffaff8646ebb1947f3a74fce5f6" rel="noopener noreferrer" style="display: block; color: inherit; text-decoration: none; user-select: none; transition: background 20ms ease-in 0s; cursor: pointer;"><div style="padding: 6px 2px; font-size: 14px; line-height: 1.3; display: flex; align-items: center; margin-left: 24px;"><div class="notranslate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px;">Step Ten</div></div></a></div></div></div><div data-block-id="71ac72ec-8c11-47bf-9543-0400b9d5a32f" class="notion-selectable notion-file-block" style="width: 100%; max-width: 1494px; margin-top: 1px; margin-bottom: 1px;"><div role="figure" aria-labelledby=":r2:"><div style="display: flex;"><div role="button" tabindex="0" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; flex-grow: 1; min-width: 0px; border-radius: 4px; color: rgb(51, 126, 169); fill: rgb(51, 126, 169);"><div style="display: flex; align-items: center; width: 100%; padding-top: 3px; padding-bottom: 3px; padding-left: 2px;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" data-text-edit-side="start" style="user-select: none; --pseudoSelection--background: transparent; margin-right: 2px; width: 1.35em; display: flex; align-items: center; justify-content: center; flex-grow: 0; flex-shrink: 0; min-height: calc(1.5em + 6px); height: 1.35em;"><svg role="graphics-symbol" viewBox="0 0 16 16" class="file" style="width: 100%; height: 100%; display: block; fill: inherit; flex-shrink: 0;"><path d="M4.35645 15.4678H11.6367C13.0996 15.4678 13.8584 14.6953 13.8584 13.2256V7.02539C13.8584 6.0752 13.7354 5.6377 13.1406 5.03613L9.55176 1.38574C8.97754 0.804688 8.50586 0.667969 7.65137 0.667969H4.35645C2.89355 0.667969 2.13477 1.44043 2.13477 2.91016V13.2256C2.13477 14.7021 2.89355 15.4678 4.35645 15.4678ZM4.46582 14.1279C3.80273 14.1279 3.47461 13.7793 3.47461 13.1436V2.99219C3.47461 2.36328 3.80273 2.00781 4.46582 2.00781H7.37793V5.75391C7.37793 6.73145 7.86328 7.20312 8.83398 7.20312H12.5186V13.1436C12.5186 13.7793 12.1836 14.1279 11.5205 14.1279H4.46582ZM8.95703 6.02734C8.67676 6.02734 8.56055 5.9043 8.56055 5.62402V2.19238L12.334 6.02734H8.95703ZM8.59473 12.7266V10.6279L8.54004 9.56152L9.06641 10.1152L9.59277 10.6484C9.68848 10.7646 9.8457 10.833 9.98926 10.833C10.2969 10.833 10.5293 10.6143 10.5293 10.3066C10.5293 10.1357 10.4678 10.0127 10.3379 9.90332L8.45117 8.16699C8.29395 8.02344 8.16406 7.96191 7.99316 7.96191C7.8291 7.96191 7.69922 8.02344 7.54199 8.16699L5.65527 9.90332C5.52539 10.0127 5.46387 10.1357 5.46387 10.3066C5.46387 10.6143 5.68945 10.833 6.00391 10.833C6.14746 10.833 6.29785 10.7646 6.40039 10.6484L6.92676 10.1152L7.45312 9.56152L7.39844 10.6279V12.7266C7.39844 13.0547 7.67188 13.3008 7.99316 13.3008C8.32129 13.3008 8.59473 13.0547 8.59473 12.7266Z"></path></svg></div><div style="flex: 1 1 0px; min-width: 1px;"><div style="display: flex; align-items: baseline;"><div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">autocomplete_starter_code.zip</div><div style="font-size: 12px; line-height: 16px; color: rgba(55, 53, 47, 0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-left: 6px;">3.2KB</div></div></div></div></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="b6ba1686-5d24-4856-b456-f70fb1725a12" class="notion-selectable notion-image-block" style="width: 600px; max-width: 1494px; align-self: center; margin-top: 4px; margin-bottom: 4px;"><div contenteditable="false" data-content-editable-void="true" role="figure" aria-labelledby="id_1"><div style="display: flex;"><div class="notion-cursor-default" style="position: relative; overflow: hidden; flex-grow: 1;"><div style="position: relative;"><div><div style="height: 100%; width: 100%;"><img loading="lazy" alt="" src="./Fruit Search_files/ezgif.com-video-to-gif.gif" referrerpolicy="same-origin" style="display: block; object-fit: cover; border-radius: 1px; pointer-events: auto; width: 100%; max-height: 351px;"></div></div></div><div style="position: absolute; top: 4px; right: 4px; border-radius: 4px; color: white; fill: white; font-size: 11.5px; background: rgba(0, 0, 0, 0.6); display: flex; white-space: nowrap; height: 26px; max-width: calc(100% - 16px); overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 300ms ease-in 0s; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; z-index: 2;"><div role="button" tabindex="0" aria-label="Download" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px 6px; border-right: 1px solid rgba(255, 255, 255, 0.2);"><svg role="graphics-symbol" viewBox="0 0 16 16" class="download" style="width: 14px; height: 14px; display: block; fill: white; flex-shrink: 0; margin-right: 0px;"><path d="M8.215 15.126c3.862 0 7.061-3.192 7.061-7.062 0-3.862-3.199-7.061-7.068-7.061-3.862 0-7.055 3.2-7.055 7.061 0 3.87 3.2 7.062 7.062 7.062zm0-1.388a5.654 5.654 0 01-5.667-5.674 5.642 5.642 0 015.66-5.667 5.66 5.66 0 015.68 5.667 5.66 5.66 0 01-5.673 5.674zm0-9.174c-.342 0-.602.247-.602.588v3.234l.062 1.401-.622-.766-.766-.8a.557.557 0 00-.41-.177.54.54 0 00-.56.547c0 .164.054.3.163.41l2.256 2.283c.15.157.294.226.479.226.191 0 .335-.075.485-.226l2.256-2.283a.557.557 0 00.164-.41.539.539 0 00-.56-.547.523.523 0 00-.41.178l-.766.793-.622.779.054-1.408V5.152c0-.341-.253-.588-.601-.588z"></path></svg></div><div role="button" tabindex="0" style="user-select: none; transition: opacity 200ms ease-in 0s; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 4px; fill: rgba(55, 53, 47, 0.45);"><svg role="graphics-symbol" viewBox="0 0 13 3" class="dots" style="width: 14px; height: 14px; display: block; fill: white; flex-shrink: 0;"><g><path d="M3,1.5A1.5,1.5,0,1,1,1.5,0,1.5,1.5,0,0,1,3,1.5Z"></path><path d="M8,1.5A1.5,1.5,0,1,1,6.5,0,1.5,1.5,0,0,1,8,1.5Z"></path><path d="M13,1.5A1.5,1.5,0,1,1,11.5,0,1.5,1.5,0,0,1,13,1.5Z"></path></g></svg></div></div></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="971e8bdd-d599-4251-8e09-e4c10681bd40" class="notion-selectable notion-image-block" style="width: 100%; max-width: 1494px; align-self: center; margin-top: 4px; margin-bottom: 4px;"><div contenteditable="false" data-content-editable-void="true" role="figure" aria-labelledby="id_2"><div style="display: flex;"><div class="notion-cursor-default" style="position: relative; overflow: hidden; flex-grow: 1;"><div style="position: relative;"><div><div style="height: 100%; width: 100%;"><img loading="lazy" alt="" src="./Fruit Search_files/Screen_Shot_2023-02-15_at_12.20.06_PM.png" referrerpolicy="same-origin" style="display: block; object-fit: cover; border-radius: 1px; pointer-events: auto; width: 100%; max-height: 414.565px;"></div></div></div><div style="position: absolute; top: 4px; right: 4px; border-radius: 4px; color: white; fill: white; font-size: 11.5px; background: rgba(0, 0, 0, 0.6); display: flex; white-space: nowrap; height: 26px; max-width: calc(100% - 16px); overflow: hidden; pointer-events: auto; opacity: 1; transition: opacity 300ms ease-in 0s; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; z-index: 2;"><div role="button" tabindex="0" aria-label="Download" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px 6px; border-right: 1px solid rgba(255, 255, 255, 0.2);"><svg role="graphics-symbol" viewBox="0 0 16 16" class="download" style="width: 14px; height: 14px; display: block; fill: white; flex-shrink: 0; margin-right: 0px;"><path d="M8.215 15.126c3.862 0 7.061-3.192 7.061-7.062 0-3.862-3.199-7.061-7.068-7.061-3.862 0-7.055 3.2-7.055 7.061 0 3.87 3.2 7.062 7.062 7.062zm0-1.388a5.654 5.654 0 01-5.667-5.674 5.642 5.642 0 015.66-5.667 5.66 5.66 0 015.68 5.667 5.66 5.66 0 01-5.673 5.674zm0-9.174c-.342 0-.602.247-.602.588v3.234l.062 1.401-.622-.766-.766-.8a.557.557 0 00-.41-.177.54.54 0 00-.56.547c0 .164.054.3.163.41l2.256 2.283c.15.157.294.226.479.226.191 0 .335-.075.485-.226l2.256-2.283a.557.557 0 00.164-.41.539.539 0 00-.56-.547.523.523 0 00-.41.178l-.766.793-.622.779.054-1.408V5.152c0-.341-.253-.588-.601-.588z"></path></svg></div><div role="button" tabindex="0" style="user-select: none; transition: opacity 200ms ease-in 0s; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 4px; fill: rgba(55, 53, 47, 0.45);"><svg role="graphics-symbol" viewBox="0 0 13 3" class="dots" style="width: 14px; height: 14px; display: block; fill: white; flex-shrink: 0;"><g><path d="M3,1.5A1.5,1.5,0,1,1,1.5,0,1.5,1.5,0,0,1,3,1.5Z"></path><path d="M8,1.5A1.5,1.5,0,1,1,6.5,0,1.5,1.5,0,0,1,8,1.5Z"></path><path d="M13,1.5A1.5,1.5,0,1,1,11.5,0,1.5,1.5,0,0,1,13,1.5Z"></path></g></svg></div></div></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="bc7b70e7-2e48-4493-b2f2-929213c8eefe" class="notion-selectable notion-image-block" style="width: 100%; max-width: 1494px; align-self: center; margin-top: 4px; margin-bottom: 4px;"><div contenteditable="false" data-content-editable-void="true" role="figure" aria-labelledby="id_3"><div style="display: flex;"><div class="notion-cursor-default" style="position: relative; overflow: hidden; flex-grow: 1;"><div style="position: relative;"><div><div style="height: 100%; width: 100%;"><img loading="lazy" alt="" src="./Fruit Search_files/Screen_Shot_2023-02-15_at_12.24.43_PM.png" referrerpolicy="same-origin" style="display: block; object-fit: cover; border-radius: 1px; pointer-events: auto; width: 100%; max-height: 412.922px;"></div></div></div><div style="position: absolute; top: 4px; right: 4px; border-radius: 4px; color: white; fill: white; font-size: 11.5px; background: rgba(0, 0, 0, 0.6); display: flex; white-space: nowrap; height: 26px; max-width: calc(100% - 16px); overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 300ms ease-in 0s; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; z-index: 2;"><div role="button" tabindex="0" aria-label="Download" style="user-select: none; transition: background 20ms ease-in 0s; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px 6px; border-right: 1px solid rgba(255, 255, 255, 0.2);"><svg role="graphics-symbol" viewBox="0 0 16 16" class="download" style="width: 14px; height: 14px; display: block; fill: white; flex-shrink: 0; margin-right: 0px;"><path d="M8.215 15.126c3.862 0 7.061-3.192 7.061-7.062 0-3.862-3.199-7.061-7.068-7.061-3.862 0-7.055 3.2-7.055 7.061 0 3.87 3.2 7.062 7.062 7.062zm0-1.388a5.654 5.654 0 01-5.667-5.674 5.642 5.642 0 015.66-5.667 5.66 5.66 0 015.68 5.667 5.66 5.66 0 01-5.673 5.674zm0-9.174c-.342 0-.602.247-.602.588v3.234l.062 1.401-.622-.766-.766-.8a.557.557 0 00-.41-.177.54.54 0 00-.56.547c0 .164.054.3.163.41l2.256 2.283c.15.157.294.226.479.226.191 0 .335-.075.485-.226l2.256-2.283a.557.557 0 00.164-.41.539.539 0 00-.56-.547.523.523 0 00-.41.178l-.766.793-.622.779.054-1.408V5.152c0-.341-.253-.588-.601-.588z"></path></svg></div><div role="button" tabindex="0" style="user-select: none; transition: opacity 200ms ease-in 0s; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 24px; height: 24px; border-radius: 4px; fill: rgba(55, 53, 47, 0.45);"><svg role="graphics-symbol" viewBox="0 0 13 3" class="dots" style="width: 14px; height: 14px; display: block; fill: white; flex-shrink: 0;"><g><path d="M3,1.5A1.5,1.5,0,1,1,1.5,0,1.5,1.5,0,0,1,3,1.5Z"></path><path d="M8,1.5A1.5,1.5,0,1,1,6.5,0,1.5,1.5,0,0,1,8,1.5Z"></path><path d="M13,1.5A1.5,1.5,0,1,1,11.5,0,1.5,1.5,0,0,1,13,1.5Z"></path></g></svg></div></div></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="baba174a-22a5-4e8d-8703-296869c45501" class="notion-selectable notion-sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1.4em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h3 spellcheck="true" placeholder="Heading 2" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.5em; line-height: 1.3; margin: 0px;">Autofill Draft</h3><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="4002557d-cd6a-4ebc-b8e5-988509bed102" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">In this project, you’ll plan and build an Autofill Search Bar for various types of fruit!You may be familiar with autofill from a search engine like Google. When you type anything into Google, a drop down appears with suggestions for what you may want to search for. If you click on one of these suggestions, it populates the search bar with that suggestion.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="35a34f92-7908-4f67-9b56-8134ce82603e" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Building search bars like this is a common task for front-end engineers. You’ll be building a small scale search bar which suggests various fruits based on user input. We’ll provide a list of fruits and a mock up of how the page should look. You’ll do the rest. If a user’s typed input is contained anywhere in one of the fruits in the list, then a drop down will appear containing all the fruits which match. As a user continues to add letters to their input, new dropdowns will populate. When a user clicks on one of these options, it will populate in the search bar.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="c2080746-40db-43a3-82ad-7545ed4b42d6" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step One </h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="56d1ab34-5e67-4d68-bafa-f92189c12e08" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Planning</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="f3d2623b-79a6-47bd-bcf7-6355fb7460be" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Before you start working on this, take a few minutes to think how you would approach building a search bar like this using HTML, CSS, and JavaScript. Jot down your thoughts on a piece of paper or a Google Doc. Don’t worry, no one else will see these notes.Ask yourself:</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="4dd96bc1-6713-4925-aa36-95168a81a90d" class="notion-selectable notion-bulleted_list-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="display: flex; align-items: flex-start; width: 100%; padding-left: 2px; color: inherit; fill: inherit;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" data-text-edit-side="start" style="user-select: none; --pseudoSelection--background: transparent; margin-right: 2px; width: 24px; display: flex; align-items: center; justify-content: center; flex-grow: 0; flex-shrink: 0; min-height: calc(1.5em + 6px);"><div class="pseudoBefore" style="font-size: 1.5em; line-height: 1; margin-bottom: 0px; --pseudoBefore--fontFamily: Arial; --pseudoBefore--content: &quot;•&quot;;"></div></div><div style="flex: 1 1 0px; min-width: 1px; display: flex; flex-direction: column;"><div style="display: flex;"><div spellcheck="true" placeholder="List" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; text-align: left;">What HTML would you use for the search bar? How about the drop down, the search button, and the filler text which will appear on the page?</div><div style="position: relative; left: 0px;"></div></div></div></div></div><div data-block-id="56fef72d-7658-476f-a02d-fb5806577f40" class="notion-selectable notion-bulleted_list-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="display: flex; align-items: flex-start; width: 100%; padding-left: 2px; color: inherit; fill: inherit;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" data-text-edit-side="start" style="user-select: none; --pseudoSelection--background: transparent; margin-right: 2px; width: 24px; display: flex; align-items: center; justify-content: center; flex-grow: 0; flex-shrink: 0; min-height: calc(1.5em + 6px);"><div class="pseudoBefore" style="font-size: 1.5em; line-height: 1; margin-bottom: 0px; --pseudoBefore--fontFamily: Arial; --pseudoBefore--content: &quot;•&quot;;"></div></div><div style="flex: 1 1 0px; min-width: 1px; display: flex; flex-direction: column;"><div style="display: flex;"><div spellcheck="true" placeholder="List" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; text-align: left;">What CSS would you use to create the color gradient on the page?</div><div style="position: relative; left: 0px;"></div></div></div></div></div><div data-block-id="6ad0082c-9307-44d6-a3a8-baa7be5b09c7" class="notion-selectable notion-bulleted_list-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="display: flex; align-items: flex-start; width: 100%; padding-left: 2px; color: inherit; fill: inherit;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" data-text-edit-side="start" style="user-select: none; --pseudoSelection--background: transparent; margin-right: 2px; width: 24px; display: flex; align-items: center; justify-content: center; flex-grow: 0; flex-shrink: 0; min-height: calc(1.5em + 6px);"><div class="pseudoBefore" style="font-size: 1.5em; line-height: 1; margin-bottom: 0px; --pseudoBefore--fontFamily: Arial; --pseudoBefore--content: &quot;•&quot;;"></div></div><div style="flex: 1 1 0px; min-width: 1px; display: flex; flex-direction: column;"><div style="display: flex;"><div spellcheck="true" placeholder="List" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; text-align: left;">What type of JavaScript event listeners would you need to add to refresh the drop-down as a user types?</div><div style="position: relative; left: 0px;"></div></div></div></div></div><div data-block-id="12ab4855-97da-47d0-8797-84712c5ca796" class="notion-selectable notion-bulleted_list-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="display: flex; align-items: flex-start; width: 100%; padding-left: 2px; color: inherit; fill: inherit;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" data-text-edit-side="start" style="user-select: none; --pseudoSelection--background: transparent; margin-right: 2px; width: 24px; display: flex; align-items: center; justify-content: center; flex-grow: 0; flex-shrink: 0; min-height: calc(1.5em + 6px);"><div class="pseudoBefore" style="font-size: 1.5em; line-height: 1; margin-bottom: 0px; --pseudoBefore--fontFamily: Arial; --pseudoBefore--content: &quot;•&quot;;"></div></div><div style="flex: 1 1 0px; min-width: 1px; display: flex; flex-direction: column;"><div style="display: flex;"><div spellcheck="true" placeholder="List" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; text-align: left;">How would you populate the search bar with an option from the drop down list? What event would trigger this action?</div><div style="position: relative; left: 0px;"></div></div></div></div></div><div data-block-id="47c4d422-8736-4e50-98b9-5db134b6369d" class="notion-selectable notion-bulleted_list-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="display: flex; align-items: flex-start; width: 100%; padding-left: 2px; color: inherit; fill: inherit;"><div contenteditable="false" class="pseudoSelection" data-content-editable-void="true" data-text-edit-side="start" style="user-select: none; --pseudoSelection--background: transparent; margin-right: 2px; width: 24px; display: flex; align-items: center; justify-content: center; flex-grow: 0; flex-shrink: 0; min-height: calc(1.5em + 6px);"><div class="pseudoBefore" style="font-size: 1.5em; line-height: 1; margin-bottom: 0px; --pseudoBefore--fontFamily: Arial; --pseudoBefore--content: &quot;•&quot;;"></div></div><div style="flex: 1 1 0px; min-width: 1px; display: flex; flex-direction: column;"><div style="display: flex;"><div spellcheck="true" placeholder="List" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; text-align: left;">How would you structure your functions?</div><div style="position: relative; left: 0px;"></div></div></div></div></div><div data-block-id="dfa6dafc-1427-47a4-8313-89bce0f8849c" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Two</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="a06eb159-f39e-40fd-9142-6a77b8644e64" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Read the Starter Code</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="b0ee7563-1da8-4a27-8e00-5f393ee0ea89" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">We have provided a small amount of starter code in this exercise. Read through it. Make sure you understand what everything does prior to starting this project. </div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="0f38e926-f060-46ed-b55d-6e5b99e7621a" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; min-height: 1em; color: rgb(55, 53, 47); -webkit-text-fill-color: rgba(55, 53, 47, 0.5);"></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="80bc47ac-2bb6-485d-afa1-9933fdbfcc13" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Three</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="7679836a-710f-4109-ab8d-4ad9356cc30f" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Create a Search Bar On Screen</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="d4d5a7fa-1782-4349-97f5-db021be7ba96" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Create a search bar using HTML which accepts user input on screen. Don’t worry about styling it until the end of the project.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="027ee37d-b1a3-49e5-9b32-96837d0420f3" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Four</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="27e29b3b-aaa0-4839-9eb1-1a713d703092" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Add Placeholder Text Into The Search Bar</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="1449c9bc-60e0-49b6-a49a-1106cf731418" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Whenever there is no user input in the search bar, it should populate with the string “Search fruit <img class="notion-emoji" alt="🍎" aria-label="🍎" style="width:1em;height:1em;background-repeat:no-repeat;background:url(&quot;/images/emoji/twitter-emoji-spritesheet-64.2d0a6b9b.png&quot;);background-position-x:10%;background-position-y:23.333333333333332%;background-size:6100% 6100%;vertical-align:-0.1em;margin:0 0.1em" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">”.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="9f0a4fac-4559-4956-b3a4-f4ca960d74ed" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Five</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="45ed5431-5cc7-4307-b72e-57d87aa8728f" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Add An Event Listener For Key Strokes</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="ef6c7fe0-3eda-4b4b-9c50-5297fe2cdad3" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Create an event listener in JavaScript that will trigger when a user types.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="0dd0d955-307e-4db9-ad12-b3c63ca5a3f8" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Six</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="ccbceca8-5bbc-4b6f-86ae-35c73882ca40" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Filter The List Based On User Input</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="b2aad993-10a7-4661-b0de-efee8ad63daa" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Write a function called search(), which will trigger based on the event listener you created in the last step. This function will return a list called results. This function will filter the fruit list based on whatever user input is in the search box. <span style="font-weight:600" data-token-index="1" class="notion-enable-hover">If the string in the user input appears ANYWHERE in the fruit name, it should be added to results list. It also should not matter if a user types upper or lower case letters. </span>That means that if a user types “ap” both “Apple” and “Grape” will appear in the results list. </div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="56a4dad5-8998-4cc6-b681-878d99887b73" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Seven </h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="48c9df33-dd96-4354-9b8a-a637f38883f8" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Display The Results List As A Drop Down </span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="7ed873d0-ae74-45dc-8ebc-6310ec2dfffc" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Take the list created in the previous step in a drop down list below the search bar.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="52565455-ffff-43ca-8bfb-c7426aff4851" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Step Eight</span></h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="06789268-f407-42b9-8e20-5b6e6d2e04b8" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Highlight the suggestion below a user’s cursor</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="77a1740a-694f-4e19-8f45-5ba1635c5c6d" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Add an event listener to trigger whenever a user hovers over one of the suggestions in the drop down list. Write a function which highlights the suggestion. Attach this function to the event listener.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="23a8f272-caec-4c69-ba90-59d9ec41f8b1" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Nine</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="14ab2628-d669-444e-9721-8280e3d6e9f9" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Populate the search box with a user’s selected suggestion</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="30ae6807-cb75-4d03-8047-64c679361244" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">When a user clicks on a suggestion, that string should fill the Search Bar. Add an event listener which triggers when a user clicks. Write a function useSuggestion() to populate the Search Bar with the suggestion. Add this function to the event listener.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="75a02ffa-ff86-46eb-b194-7f3a74fce5f6" class="notion-selectable notion-sub_sub_header-block" style="width: 100%; max-width: 1302px; margin-top: 1em; margin-bottom: 1px;"><div style="display: flex; width: 100%; color: inherit; fill: inherit;"><h4 spellcheck="true" placeholder="Heading 3" data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-weight: 600; font-size: 1.25em; line-height: 1.3; margin: 0px;">Step Ten</h4><div style="position: relative; left: 0px;"></div></div></div><div data-block-id="731ecf39-5ba4-4595-804c-51fab7d49e17" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;"><span style="font-weight:600" data-token-index="0" class="notion-enable-hover">Style the Page</span></div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="04f5f997-d00e-4795-b439-7064ebf5c8b9" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 1px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px;">Add a linear-gradient CSS styling to the page which matches the mockup. This should style both the background and the search bar.</div><div style="position: relative; left: 0px;"></div></div></div></div><div data-block-id="29fa4ecd-7e0a-48ed-aab3-36e4b451a043" class="notion-selectable notion-text-block" style="width: 100%; max-width: 1302px; margin-top: 1px; margin-bottom: 0px;"><div style="color: inherit; fill: inherit;"><div style="display: flex;"><div spellcheck="true" placeholder=" " data-content-editable-leaf="true" contenteditable="false" style="max-width: 100%; width: 100%; white-space: pre-wrap; word-break: break-word; caret-color: rgb(55, 53, 47); padding: 3px 2px; min-height: 1em; color: rgb(55, 53, 47); -webkit-text-fill-color: rgba(55, 53, 47, 0.5);"></div><div style="position: relative; left: 0px;"></div></div></div></div></div></div></div><span data-content-editable-root-tiny-selection-trap="true" style="height: 1px; width: 1px; caret-color: transparent;"></span></div><div class="notion-presence-container" style="position: absolute; top: 0px; left: 0px; z-index: 89;"><div></div></div></div></main></div><div role="region" aria-label="Side Peek" aria-hidden="true" class="notion-peek-renderer" style="position: fixed; top: 0px; right: 0px; bottom: 0px; width: 752px; z-index: 109; transform: translateX(752px) translateZ(0px);"></div></div></div><div class="notion-overlay-container notion-default-overlay-container" style="position: fixed; inset: 0px; z-index: 999; pointer-events: none; overflow: hidden;"><div style="position: relative; z-index: 0;"></div></div></div></div><script>window.CONFIG={env:"production",isAdminMode:!1,isDevelopingInAirplaneMode:!1,isLocalhost:!1,offline:!0,version:"23.13.0.124",domainBaseUrl:"https://www.notion.so",adminUrl:"https://admin.notion.so",publicDomainName:"notion.site",protocol:"notion",staticS3:{url:"https://prod-notion-assets.s3-us-west-2.amazonaws.com",bucket:"prod-notion-assets"},lastUpdatedTime:1708997048696,api:{http:"/api/v3"},googleOAuth:{clientId:"905154081809-858sm3f0qnalqd9d44d9gecjtrdji9tf.apps.googleusercontent.com"},messageStore:{url:"https://msgstore.www.notion.so",api:"/api/v1"},stripe:{key:"pk_live_vuNO27XGTCbXjVwneiECILjT"},calendar:{domainBaseUrl:"https://calendar.notion.so",notionAuthUrl:"https://calendar.notion.so/notion-auth",openNotionDatabaseUrl:"https://calendar.notion.so/open-notion-database",desktopProtocol:"cron",downloadUrl:"https://www.notion.so/calendar/download"},cron:{domainBaseUrl:"https://calendar.cron.com"},revenueCat:{apiResponseMaxAge:6048e5,entitlementIDs:{personal:"notion.id.personal_pro"},productIDs:{personal:{monthly:"notion.id.personal_pro_monthly",yearly:"notion.id.personal_pro_yearly"}}},intercom:{appId:"gpfdrxfd",adminId:"3483686"},mutiny:{personalKey:"1149e901f65fc47c"},partnerStack:{apiKey:"pk_6nwYfqCKEoPt2lTuU8Veswm2zArJ3Apq"},segment:{writeKey:"g1mMn2qquRcv7exBIVDivoKl9cOrdxLA"},amplitude:{apiKey:"af43d4b535912f7751949bfb061d8659"},pricing:{invoiceDaysUntilDue:30,free:{spaceBlockLimit:1e3,fileUploadMaxBytes:5e6},team_free:{spaceBlockLimit:1e3,fileUploadMaxBytes:5e6},personal_free:{fileUploadMaxBytes:5e6},student:{productId:"prod_FhChFoDp7gS1Ba"},personal:{productId:"prod_CpavZFCbxF2YGx",monthlyPrice:500,yearlyPrice:4800},plus:{productId:"prod_CpawK4ih14xs4t",monthlyPricePerMember:1e3,yearlyPricePerMember:9600},business:{productId:"prod_LEnFERYcTgENz8",monthlyPricePerMember:1800,yearlyPricePerMember:18e3},enterprise:{productId:"prod_Cpb8M1AFEFhdy1",monthlyPricePerMember:2500,yearlyPricePerMember:24e3},ai:{productId:"prod_N6tyEr9FFSTXJo",monthlyPricePerMember:1e3,yearlyPricePerMember:9600}},trials:{affiliates:{duration:14},default:{duration:14},enterprise:{duration:30},marketing:{duration:14},upwork:{duration:30}},desktopS3:{url:"https://s3-us-west-2.amazonaws.com/desktop-release.notion-static.com"},publicFileS3:{url:"https://s3-us-west-2.amazonaws.com/public.notion-static.com",bucket:"public.notion-static.com"},temporaryFileS3:{url:"https://s3-us-west-2.amazonaws.com/temporary.notion-static.com",bucket:"temporary.notion-static.com"},secureFileS3:{url:"https://s3-us-west-2.amazonaws.com/secure.notion-static.com",bucket:"secure.notion-static.com"},secureFileS3V2:{url:"https://prod-files-secure.s3.us-west-2.amazonaws.com",bucket:"prod-files-secure"},secureFileConfig:{origins:{s:"secure.notion-static.com",f:"prod-files-secure"},s3BaseDomainName:"s3.us-west-2.amazonaws.com",rootPath:"/f",protocol:"https",hostname:"lessons.springboard.com"},loggly:{token:"9b01b08e-c969-4e27-837c-805d1fc6ec7b"},splunk:{token:"EA76605A-F565-4B17-A496-34435622A1EB"},embedly:{key:"421626497c5d4fc2ae6b075189d602a2"},iframely:{key:"222a85036317ca50d3ba5f321bfda6f0"},iframely_prod:{key:"656ac74fac4fff346b811dca7919d483"},aif:{url:"https://lessons.springboard.com/aif-production.html"},contentful:{spaceId:"spoqsaf9291f",contentDeliveryToken:"AGqteRpWD8aE_kxy_s7_hSFAlKCh5qf-RctSU6vV6u0",contentPreviewToken:"uR2ZVAs-9TMKDq0YKYVtczFplx6P9p06huCibZDJZKA"},iOSAppId:1232780281,facebook:{pixelId:"499229960464487"},statsig:{apiKey:"client-Tgza5wNFa8dVt9BdeUfG6Vkm29bHxX10MhoztTMzLBB"},googleReCaptcha:{siteKey:"6LcvqigfAAAAAPaPL3j2YLldFcZVGwKvG9TmjDgK"},turnstile:{sitekey:"0x4AAAAAAADLq8YYJOHc6qqw"},google:{clientId:"905154081809-858sm3f0qnalqd9d44d9gecjtrdji9tf.apps.googleusercontent.com"},sprig:{environmentId:"2HKBN1wgCwHr"}}</script>
+          
+  <script id="ci-hist-js">
+  window.CONFIG.domainBaseUrl = 'https://lessons.springboard.com';
+      const SLUG_TO_PAGE = {"":"8ee4277b573a4b75bfac61357183ca4a"};
+      const PAGE_TO_SLUG = {};
+      const slugs = [];
+      const pages = [];
+      const el = document.createElement('div');
+      let redirected = false;
+      Object.keys(SLUG_TO_PAGE).forEach(slug => {
+        const page = SLUG_TO_PAGE[slug];
+        slugs.push(slug);
+        pages.push(page);
+        PAGE_TO_SLUG[page] = slug;
+      });
+      function getPage() {
+        return location.pathname.slice(-32);
+      }
+      function getSlug() {
+        return location.pathname.slice(1);
+      }
+      function updateSlug() {
+        const slug = PAGE_TO_SLUG[getPage()];
+        if (slug != null) {
+          history.replaceState(history.state, '', '/' + slug);
+        }
+      }
+      const observer = new MutationObserver(function() {
+        if (redirected) return;
+        const nav = document.querySelector('.notion-topbar');
+        const mobileNav = document.querySelector('.notion-topbar-mobile');
+        if (nav && nav.firstChild && nav.firstChild.firstChild
+          || mobileNav && mobileNav.firstChild) {
+          redirected = true;
+          updateSlug();
+          // const state = __console.environment.ThemeStore.getState();
+          // addDarkModeButton(nav ? 'web' : 'mobile', state?.mode ? state.mode : 'light');
+          const onpopstate = window.onpopstate;
+          window.onpopstate = function() {
+            if (slugs.includes(getSlug())) {
+              const page = SLUG_TO_PAGE[getSlug()];
+              if (page) {
+                history.replaceState(history.state, 'bypass', '/' + page);
+              }
+            }
+            onpopstate.apply(this, [].slice.call(arguments));
+            updateSlug();
+          };
+        }
+      });
+      observer.observe(document.querySelector('#notion-app'), {
+        childList: true,
+        subtree: true,
+      });
+      const replaceState = window.history.replaceState;
+      window.history.replaceState = function(state) {
+        if (arguments[1] !== 'bypass' && slugs.includes(getSlug())) return;
+        return replaceState.apply(window.history, arguments);
+      };
+      const pushState = window.history.pushState;
+      window.history.pushState = function(state) {
+        const dest = new URL(location.protocol + location.host + arguments[2]);
+        const id = dest.pathname.slice(-32);
+        if (pages.includes(id)) {
+          arguments[2] = '/' + PAGE_TO_SLUG[id];
+        }
+        return pushState.apply(window.history, arguments);
+      };
+      const open = window.XMLHttpRequest.prototype.open;
+      window.XMLHttpRequest.prototype.open = function() {
+        arguments[1] = arguments[1].replace('lessons.springboard.com', 'www.notion.so');
+        // arguments[1] = arguments[1].replace('msgstore.www.notion.so', 'lessons.springboard.com');
+        if (arguments[1].includes('msgstore.www.notion.so') || arguments[1].includes('primus-v8')) {
+          console.log('Swallowed request:', arguments[1]);
+          return;
+        }
+        return open.apply(this, [].slice.call(arguments));
+      };
+    </script>
+  
+            
+  <div></div>
+  <div class="dup-container" style="display:none;">
+    <button class="dup-button dup-button-dark">
+      <span><a href="https://www.notion.so/8ee4277b573a4b75bfac61357183ca4a?duplicate=true&amp;pvs=36&amp;utm_source=public_page&amp;utm_content=duplicate_button&amp;tid=undefined&amp;from=public_page&amp;n=duplicate_public_page" class="reset-a" target="_blank">Duplicate</a></span>
+    </button>
+  </div>
+  <div class="dup-container" style="display:none;">
+    <button id="dupe-open" class="dup-button dup-button-dark">
+      <span><a href="https://lessons.springboard.com/Fruit-Search-ef1f74b7f30f44229e9f026c89df76fa#" class="reset-a">Duplicate</a></span>
+    </button>
+  </div>
+  <div id="dupe-modal" style="display: none;">
+    <div class="dupe-content">
+      <h3 class="dupe-title">Ready to copy this Notion template?</h3>
+      <p class="dupe-description">Click Continue to duplicate this template to your Notion workspace.</p>
+      <div class="dupe-footer">
+        <button id="dupe-cancel" class="dupe-button dupe-cancel">Cancel</button>
+        <button id="dupe-continue" class="dupe-button dupe-continue">
+          <span><a href="https://www.notion.so/8ee4277b573a4b75bfac61357183ca4a?duplicate=true&amp;pvs=36&amp;utm_source=public_page&amp;utm_content=duplicate_button&amp;tid=undefined&amp;from=public_page&amp;n=duplicate_public_page" class="reset-a" target="_blank">Continue</a></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script id="ci-dupe-modal">
+    document.getElementById('dupe-open').addEventListener('click', function() { 
+      document.getElementById('dupe-modal').style.display = 'flex';
+    });
+    document.getElementById('dupe-modal').addEventListener('click', function() {
+        document.getElementById('dupe-modal').style.display = 'none';
+    });
+    document.getElementById('dupe-continue').addEventListener('click', function() {
+        document.getElementById('dupe-modal').style.display = 'none';
+    });
+    document.getElementById('dupe-cancel').addEventListener('click', function() {
+        document.getElementById('dupe-modal').style.display = 'none';
+    });  
+  </script>
+
+  <div class="toggle-button toggle-light">
+    <div style="margin-left: auto; margin-right: 14px; min-width: 0px;">
+      <div role="button" tabindex="0" style="user-select: none; transition: background 120ms ease-in 0s; cursor: pointer; border-radius: 44px;">
+        <div style="display: flex; flex-shrink: 0; height: 14px; width: 26px; background: white; border-radius: 44px; border-style: solid; border-width: 0.1em; border-color: #6D6C68; padding: 2px; box-sizing: content-box; transition: background 200ms ease 0s, box-shadow 200ms ease 0s;">
+          <div style="width: 14px; height: 14px; border-radius: 44px; background: white; transition: transform 200ms ease-out 0s, background 200ms ease-out 0s; transform: translateX(0px) translateY(0px); content: url(&quot;https://cdn.cloak.ist/toggle_moon.svg&quot;);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toggle-button toggle-dark toggle-off">
+    <div style="margin-left: auto; margin-right: 14px; min-width: 0px;">
+      <div role="button" tabindex="0" style="user-select: none; transition: background 120ms ease-in 0s; cursor: pointer; border-radius: 44px;">
+        <div style="display: flex; flex-shrink: 0; height: 14px; width: 26px; border-radius: 44px; border-style: solid; border-width: 0.1em; border-color: #D4D4D4; padding: 2px; box-sizing: content-box; transition: background 200ms ease 0s, box-shadow 200ms ease 0s;">
+          <div style="width: 14px; height: 14px; border-radius: 44px; transition: transform 200ms ease-out 0s, background 200ms ease-out 0s; transform: translateX(12px) translateY(0px); content: url(&quot;https://cdn.cloak.ist/toggle_sun.svg&quot;);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script id="ci-fixed-js-body">
+  let themeStoreIntervalId = -1
+  let themeStoreFound = false
+  let initModeCount = 0
+  //
+  function onDark() {
+    document.body.classList.add('dark');
+    document.querySelector('.toggle-light').classList.add('toggle-off')
+    document.querySelector('.toggle-dark').classList.remove('toggle-off')
+    document.querySelectorAll('.dup-button')[0].classList.remove('dup-button-dark')
+    document.querySelectorAll('.dup-button')[1].classList.remove('dup-button-dark')
+    if(!themeStoreFound && themeStoreIntervalId == -1) {
+      themeStoreIntervalId = setInterval(updateThemeStore, 500, 'dark');
+      // console.log('🐽 themeStore interval', themeStoreIntervalId)
+    } else if(themeStoreFound) {
+      // console.log('🐽 themeStore exists set to dark')
+      __console.environment.ThemeStore.setState({ mode: 'dark' })
+    }
+  };
+  function onLight() {
+    document.body.classList.remove('dark');
+    document.querySelector('.toggle-light').classList.remove('toggle-off')
+    document.querySelector('.toggle-dark').classList.add('toggle-off')
+    document.querySelectorAll('.dup-button')[0].classList.add('dup-button-dark')
+    document.querySelectorAll('.dup-button')[1].classList.add('dup-button-dark')
+    if(!themeStoreFound && themeStoreIntervalId == -1) {
+      themeStoreIntervalId = setInterval(updateThemeStore, 500, 'light');
+      // console.log('🐽 themeStore interval', themeStoreIntervalId)
+    } else if(themeStoreFound) {
+      // console.log('🐽 themeStore exists set to light')
+      __console.environment.ThemeStore.setState({ mode: 'light' })
+    }
+  }
+  async function updateThemeStore(mode) {
+    // console.log('🐽 check for themeStore...')
+    if(__console?.environment?.ThemeStore) {
+      themeStoreFound = true
+      // console.log('🐽 themeStore found...')
+      if(initModeCount < 10) {
+        initModeCount += 1
+      } else {
+        clearInterval(themeStoreIntervalId)
+      }
+      // console.log('🐽 setting the theme...', mode)
+      __console.environment.ThemeStore.setState({ mode: mode })
+    }
+  }
+  function toggle() {
+    initModeCount = 10
+    // console.log('🐽 toggle off', __console?.environment?.ThemeStore?.getState()?.mode)
+    // if (document.body.classList.contains('dark')) {
+    if (__console?.environment?.ThemeStore?.getState()?.mode === 'dark') {
+      onLight();
+    } else {
+      onDark();
+    }
+  }
+  let toggleLight = document.querySelector('.toggle-light');
+  let toggleDark = document.querySelector('.toggle-dark');
+  toggleLight.addEventListener('click', toggle);
+  toggleDark.addEventListener('click', toggle);
+  let forceDarkMode = 'undefined'
+  if (forceDarkMode === 'true' || (forceDarkMode === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    // console.log('🐽 init dark mode', 'forceDarkMode', forceDarkMode, 'prefers-color-scheme', window.matchMedia('(prefers-color-scheme: dark)'))
+    onDark()
+  } else if (forceDarkMode === 'false' || (forceDarkMode === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+    // console.log('🐽 init light mode', 'forceDarkMode', forceDarkMode, 'prefers-color-scheme', window.matchMedia('(prefers-color-scheme: light)'))
+    onLight()
+  } else {
+    // console.log('🐽 init default light mode')
+    onLight()
+  }  
+  
+  //
+  
+  //
+  async function hideIt() { // #5
+    await new Promise(resolve => setTimeout(resolve, 500));
+    document.head.querySelector("link[rel*='shortcut icon']").href = 'https://www.springboard.com/assets/images/new-fav-icon.ico'
+  }
+  var intervalId = window.setInterval(function () { hideIt(); }, 200);
+
+  </script>
+
+  <script id="ci-fixed-js-topbar">
+    const callbackNotionHeader2 = function(mutationsList, observer) {
+    
+      for (const mutation of mutationsList) {
+    
+        if (mutation.type === 'childList') {
+    
+          mutation.addedNodes.forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+    
+              const headerElement = node.nodeName.toUpperCase() === 'HEADER' ? node : node.querySelector('header');
+    
+              if (headerElement) {
+                // console.log('Found a <header> element within the added node:', headerElement);
+    
+                if (headerElement.querySelector(".notion-topbar-mobile")) {
+                  console.log("Handle notion-topbar-mobile...");
+                  const topbarMobile = headerElement.querySelector(".notion-topbar-mobile");
+                  const nodeDivs = topbarMobile.querySelectorAll('div');
+                  removeTopBarNodes(nodeDivs);
+
+                } else {
+                  const notionTopBarElement = headerElement.querySelector(".notion-topbar")
+                  // register notion-topbar observer
+                  // console.log("Starting observerNotionTopBar...");
+    
+                  const callbackNotionTopBar = function(mutationsList, observer) {
+                    for (const mutation of mutationsList) {
+                      if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(node => {
+                          if (node.nodeType === Node.ELEMENT_NODE) {
+                            // console.log("Added node:", node);
+    
+                            if (!node.classList.contains('shadow-cursor-breadcrumb') && !node.classList.contains('notion-record-icon') && !node.classList.contains('notion-page-block')) {
+                              const nodeDivs = node.querySelectorAll('div');
+                              removeTopBarNodes(nodeDivs);
+                            }
+                          }
+                        });
+                      }
+                    }
+                  };
+    
+                  const observerNotionTopBar = new MutationObserver(callbackNotionTopBar);
+                  observerNotionTopBar.observe(notionTopBarElement, {
+                    attributes: false,
+                    childList: true,
+                    subtree: true
+                  });
+                }
+              }
+            }
+          });
+        }
+      }
+    };
+    
+    const observerNotionHeader2 = new MutationObserver(callbackNotionHeader2);
+    observerNotionHeader2.observe(document.body, {
+      attributes: false,
+      childList: true,
+      subtree: true
+    });
+    
+    function removeTopBarNodes(nodeDivs) {
+      if (nodeDivs) {
+        let currentNode = nodeDivs[0];
+        let nodesToRemove = [];
+        let keepNextNode = true;
+        do {
+          // console.log('keepNextNode:', keepNextNode)
+          if (!keepNextNode) {
+            nodesToRemove.push(currentNode);
+          } else {
+            const currentNodeStyle = currentNode.style;
+            const currentNodeStyleFlexGrow = currentNodeStyle && currentNodeStyle["flex-grow"];
+            const currentNodeStyleFlexShrink = currentNodeStyle && currentNodeStyle["flex-shrink"];
+            // console.log("change KEEP:", (currentNodeStyleFlexGrow == 1 && currentNodeStyleFlexShrink == 1))
+            keepNextNode = (currentNodeStyleFlexGrow == 1 && currentNodeStyleFlexShrink == 1);
+            if(!keepNextNode) {
+              // console.log("THIS IS THE SEARCH BUTTON ")
+              currentNode.classList.add('ci-display-none');
+              currentNode.style.marginRight = '50px'
+            }
+          }
+    
+          currentNode = currentNode.nextSibling;
+    
+        } while (currentNode);
+    
+        // console.log("nodesToRemove:", nodesToRemove);
+        nodesToRemove.forEach(removeNode => removeNode.remove());
+      }
+    }
+  </script><script>
+
+    /************ Constant and Variable ******************/
+
+    // General Constants
+    let oldHref = document.location.href.split("#")[0];
+    const body = document.querySelector('body');
+    const isMobileTabletView = window.innerWidth <= 1280;
+    const afterBegin = 'afterbegin';
+    let urlChangeObserver, tableOfContentChangeObserver;
+    const config = {
+        childList: true,
+        subtree: true
+    };
+    const marginLeftStyle = {
+        marginLeft: '16px',
+    }
+
+
+    // Springboard logo html
+    const SpringboardLogoHtml = "<div class='springboard-logo-container'>" +
+        "<img class='springboard-logo' src='https://www.springboard.com/assets/images/new-springboard-logo-dark@2x.png' " +
+        "alt='Springboard Logo'/></div>";
+
+    // Cloak.ist url for our notion file
+    const lessonsSpringboardUrl = window.location.origin;
+
+    // Notion classnames
+    const toggleModeClassName = 'toggle-mode';
+    const notionTopBarClassName = 'notion-topbar';
+    const notionTopBarMobileClassName = 'notion-topbar-mobile';
+    const notionTableOfContentsBlock = 'notion-table_of_contents-block';
+    const noTranslateClassName = 'notranslate';
+    const notionFrameClassName = 'notion-frame';
+    const notionScrollerClassName = 'notion-scroller';
+    const pseudoSelectionClassName = 'pseudoSelection';
+    const notionPageContentClassName = 'notion-page-content';
+
+    // Notion classnames with combination
+    const mainInNotionScroller = '.notion-scroller main';
+    const tableOfContentInNotionFrame = '.notion-frame > .notion-table_of_contents-block';
+    const tableOfContentInNotionPageContent = '.notion-page-content > .notion-table_of_contents-block'
+
+    /************ Functions *******************************/
+
+    /************ Generic Function  ***********************/
+
+    const hideElement = (element) => {
+        element.style.display = 'none';
+    }
+
+    const displayElement = (element, value = 'block') => {
+        element.style.display = value;
+    }
+
+    const hideChildren = (element) => {
+        element.children && [...element.children].map((child) => hideElement(child));
+    }
+
+    const hideChildrenExceptOne = (element, childClassName) => {
+        element.children && [...element.children].map((child) => {
+            if (!child.classList.contains(childClassName)) {
+                hideElement(child);
+            }
+        });
+    }
+
+    const removeChildren = (element) => {
+        while (element.hasChildNodes()) {
+            element.removeChild(element.firstChild);
+        }
+    }
+
+    const removeElements = (classname) => {
+        const elements = document.querySelectorAll(classname);
+        elements && elements.length && [...elements].map(element => {
+            removeChildren(element);
+            element.remove();
+        })
+    }
+
+    const updateScrollableElementUI = (element, styles) => {
+        const scrollable = element.scrollHeight > element.clientHeight;
+        if (scrollable) {
+            Object.keys(styles).forEach(key => element.style[key] = styles[key])
+        }
+    }
+
+    const moveElementToParent = (parentClassName, element, position) => {
+        const parentElm = document.querySelector(parentClassName);
+        if (parentElm) {
+            parentElm.insertAdjacentHTML(position, element.outerHTML);
+        }
+    }
+
+    const waitForElement = (querySelector, element) => {
+        return new Promise(resolve => {
+            let elementInDom = element ? element.querySelector(querySelector) : document.querySelector(querySelector);
+
+            if (elementInDom) {
+                return resolve(elementInDom);
+            }
+
+            const observer = new MutationObserver(mutations => {
+                elementInDom = element ? element.querySelector(querySelector) : document.querySelector(querySelector);
+                if (elementInDom) {
+                    resolve(elementInDom);
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
+    /************ Adding Springboard Logo In Header  ***********************/
+
+    const addSpringboardLogo = (className) => {
+        body.insertAdjacentHTML(afterBegin, SpringboardLogoHtml);
+        // hiding everything except toggle button
+        waitForElement(`.${className}`).then((element) => {
+            if (isMobileTabletView) {
+                if (element && element.children) {
+                    hideChildrenExceptOne(element, toggleModeClassName);
+                }
+            } else {
+                waitForElement(`.${noTranslateClassName}`, element).then((noTranslateDiv) => {
+                    if (noTranslateDiv && noTranslateDiv.children) {
+                        hideChildrenExceptOne(noTranslateDiv, toggleModeClassName);
+                    }
+                });
+            }
+        });
+    }
+
+    const setHeaderUI = () => {
+        (isMobileTabletView) ? addSpringboardLogo(notionTopBarMobileClassName) : addSpringboardLogo(notionTopBarClassName);
+       
+    }
+
+    /************ Functions To Set Table Of Content  ***********************/
+
+    const setTableOfContentUI = (element) => {
+        const styleObj = isMobileTabletView ? {} : marginLeftStyle;
+        updateScrollableElementUI(element, styleObj);
+        moveElementToParent(`.${notionFrameClassName}`, element, afterBegin);
+    }
+
+    const setMainContentStyle = () => {
+        const mainContent = document.querySelector(mainInNotionScroller);
+        if (mainContent) {
+            mainContent.style.justifyContent = 'space-around';
+            const headingDiv = mainContent.previousSibling;
+            if (headingDiv) headingDiv.style.marginLeft = '-120px';
+        }
+    }
+
+    const setTableOfContentMenuUI = (className, callback) => {
+        waitForElement(className).then((tableOfContent) => {
+            removeElements(tableOfContentInNotionFrame);
+            setTableOfContentChangeObserver(tableOfContent);
+            setTableOfContentUI(tableOfContent);
+            setMainContentStyle();
+            callback && callback();
+        });
+    }
+
+    const handleUrlChangeUI = () => {
+        removeElements(tableOfContentInNotionFrame);
+        setTableOfContentMenuUI(tableOfContentInNotionPageContent);
+    }
+
+    /************ Mutation Observers  ***********************/
+
+    const setUrlChangeObserver = () => {
+        urlChangeObserver = new MutationObserver((mutations) => {
+            const href = document.location.href.split("#")[0];
+            if (oldHref !== href) {
+                oldHref = href;
+                handleUrlChangeUI();
+            }
+        });
+
+        urlChangeObserver.observe(body, config);
+    }
+
+    const setTableOfContentChangeObserver = (element) => {
+        tableOfContentChangeObserver = new MutationObserver((mutations) => {
+            removeElements(tableOfContentInNotionFrame);
+            setTableOfContentUI(element);
+        });
+
+
+        tableOfContentChangeObserver.observe(element, config);
+    }
+
+    /************ Main Functions  ***********************/
+
+    const setSpringboardUI = () => {
+        setHeaderUI();
+        if (!isMobileTabletView) {
+            setTableOfContentMenuUI(tableOfContentInNotionPageContent);
+            setUrlChangeObserver();
+        }
+    }
+
+    /************ Window Functions  ***********************/
+
+    window.onload = (event) => {
+        waitForElement(`.${notionFrameClassName}`).then((element) => {
+            setSpringboardUI();
+        });
+    };
+
+    window.addEventListener("beforeunload", (e) => {
+        urlChangeObserver && urlChangeObserver.disconnect();
+        tableOfContentChangeObserver && tableOfContentChangeObserver.disconnect();
+    });
+
+    /**********************************************************/
+
+</script>
+
+<iframe sandbox="allow-scripts allow-same-origin" style="position: absolute; opacity: 0; width: 1px; height: 1px; top: 0; left: 0; border: none; display: block; z-index: -1;" aria-hidden="true" tabindex="-1" referrerpolicy="no-referrer" src="./Fruit Search_files/aif-production.html"></iframe><iframe id="intercom-frame" style="position: absolute !important; opacity: 0 !important; width: 1px !important; height: 1px !important; top: 0 !important; left: 0 !important; border: none !important; display: block !important; z-index: -1 !important; pointer-events: none;" aria-hidden="true" tabindex="-1" title="Intercom" src="./Fruit Search_files/saved_resource.html"></iframe><div class="intercom-lightweight-app"><style id="intercom-lightweight-app-style" type="text/css">
+  @keyframes intercom-lightweight-app-launcher {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes intercom-lightweight-app-gradient {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes intercom-lightweight-app-messenger {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .intercom-lightweight-app {
+    position: fixed;
+    z-index: 2147483001;
+    width: 0;
+    height: 0;
+    font-family: intercom-font, "Helvetica Neue", "Apple Color Emoji", Helvetica, Arial, sans-serif;
+  }
+
+  .intercom-lightweight-app-gradient {
+    position: fixed;
+    z-index: 2147483002;
+    width: 500px;
+    height: 500px;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at bottom right,
+      rgba(29, 39, 54, 0.16) 0%,
+      rgba(29, 39, 54, 0) 72%);
+    animation: intercom-lightweight-app-gradient 200ms ease-out;
+  }
+
+  .intercom-lightweight-app-launcher {
+    position: fixed;
+    z-index: 2147483003;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none;
+    bottom: 20px;
+    right: 20px;
+    max-width: 48px;
+    width: 48px;
+    max-height: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #546270;
+    cursor: pointer;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.06), 0 2px 32px 0 rgba(0, 0, 0, 0.16);
+    transition: transform 167ms cubic-bezier(0.33, 0.00, 0.00, 1.00);
+    box-sizing: content-box;
+  }
+
+
+  .intercom-lightweight-app-launcher:hover {
+    transition: transform 250ms cubic-bezier(0.33, 0.00, 0.00, 1.00);
+    transform: scale(1.1)
+  }
+
+  .intercom-lightweight-app-launcher:active {
+    transform: scale(0.85);
+    transition: transform 134ms cubic-bezier(0.45, 0, 0.2, 1);
+  }
+
+
+  .intercom-lightweight-app-launcher:focus {
+    outline: none;
+
+    
+  }
+
+  .intercom-lightweight-app-launcher-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 48px;
+    transition: transform 100ms linear, opacity 80ms linear;
+  }
+
+  .intercom-lightweight-app-launcher-icon-open {
+    
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      
+  }
+
+  .intercom-lightweight-app-launcher-icon-open svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .intercom-lightweight-app-launcher-icon-open svg path {
+    fill: rgb(255, 255, 255);
+  }
+
+  .intercom-lightweight-app-launcher-icon-self-serve {
+    
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      
+  }
+
+  .intercom-lightweight-app-launcher-icon-self-serve svg {
+    height: 44px;
+  }
+
+  .intercom-lightweight-app-launcher-icon-self-serve svg path {
+    fill: rgb(255, 255, 255);
+  }
+
+  .intercom-lightweight-app-launcher-custom-icon-open {
+    max-height: 24px;
+    max-width: 24px;
+
+    
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      
+  }
+
+  .intercom-lightweight-app-launcher-icon-minimize {
+    
+        opacity: 0;
+        transform: rotate(-60deg) scale(0);
+      
+  }
+
+  .intercom-lightweight-app-launcher-icon-minimize svg path {
+    fill: rgb(255, 255, 255);
+  }
+
+  .intercom-lightweight-app-messenger {
+    position: fixed;
+    z-index: 2147483003;
+    overflow: hidden;
+    background-color: white;
+    animation: intercom-lightweight-app-messenger 250ms cubic-bezier(0, 1, 1, 1);
+    transform-origin: bottom right;
+
+    
+        width: 400px;
+        height: calc(100% - 40px);
+        max-height: 704px;
+        min-height: 250px;
+        right: 20px;
+        bottom: 20px;
+        box-shadow: 0 5px 40px rgba(0,0,0,0.16);
+      
+
+    border-radius: 16px;
+  }
+
+  .intercom-lightweight-app-messenger-header {
+    height: 64px;
+    border-bottom: none;
+    background: #546270
+
+    
+  }
+
+  .intercom-lightweight-app-messenger-footer{
+    position:absolute;
+    bottom:0;
+    width: 100%;
+    height: 80px;
+    background: #fff;
+    font-size: 14px;
+    line-height: 21px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+    
+  }
+
+  @media print {
+    .intercom-lightweight-app {
+      display: none;
+    }
+  }
+</style></div></body></html>
