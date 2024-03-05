@@ -7,15 +7,6 @@ const fruits = ['Apple', 'Apricot', 'Avocado 🥑', 'Banana', 'Bilberry', 'Black
 input.addEventListener('keyup', showSuggestions);
 
 
-// checks to see if the key pressed is a letter 
-function isAlpha(e) {
-  const alphabet = new Set('abcdefghijklmnopqrstuvwxyz')
-  if (alphabet.has(e.key.toLowerCase())) {
-    return true
-  }
-}
-
-
 
 // shows all the fruits suggestions based on what is entered in the search bar
 function showSuggestions(e) {
@@ -29,19 +20,17 @@ function showSuggestions(e) {
   }
 
   // calls the search function and extracts the array with the suggestion results, and the orinal fruit list in lower case
-  const [results, fruitsLower] = search(e);
+  const [results] = search(e);
   
   // iterates over the results array, makes a new li for each result
   for (let result of results) {
-    // finds index of suggestion result within the original fruit array
-    const index = fruitsLower.indexOf(result);
     // creates a new li element for each fruit
     const fruitListElem = document.createElement('li');
     // adds two event listeners to each li created, one controls the li being highlighted when the mouse moves over it, and the other adds the suggestion text to the search bar when the li is clicked
     fruitListElem.addEventListener('mouseover', highlight);
     fruitListElem.addEventListener('click', useSuggestion)
     // sets the inner text of the suggestion to the proper fruit
-    fruitListElem.innerText = fruits.at(index);
+    fruitListElem.innerText = result
     // appends the li to the ul
     suggestions.append(fruitListElem);
   }
@@ -55,30 +44,16 @@ function search(e) {
   let results = [];
   // input text is updated to reflect what is in the search bar after every change made to it
   const inputText = input.value.toLowerCase();
-  const fruitsLower = [];
 
-  // make fruit array lower case to compare with lowercase input value
-  fruits.forEach(function(fruit) {
-    return fruitsLower.push(fruit.toLowerCase());
+  results = fruits.filter(function(fruit) {
+    return fruit.toLowerCase().includes(inputText)
   })
 
-  // if key is a letter or a backspace, update what the search results are 
-  if(isAlpha(e) || e.key === 'Backspace') {
-    for (let fruit of fruitsLower) {
-      // if the input text is found withing any of the fruits, add that fruit to the result array
-      if (fruit.indexOf(inputText) !== -1) {
-        results.push(fruit)
-      }
-    }
-    // if nothing is present in the search bar, make sure that the result array is empty
-    if (e.target.value.length === 0) {
-      results.length = 0;
-    }
-  }
-
   // return the results array and the fruits lower array
-	return [results, fruitsLower];
+	return [results];
 }
+
+
 
 // controls the highlighting of the search result 
 function highlight(e) {
